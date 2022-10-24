@@ -323,3 +323,10 @@ console.log(_.capitalize('DENO'))
 ---
 ### 拓展：deno deploy
 
+- [Deno deploy](https://deno.com/deploy) 是类似于 netlify / vercel 的微服务构建、部署工具。
+借助 deno 的无本地依赖特性，可以实现 git push 后立即可访问远端站点。（CI <20s）
+- 同时，不需要做复杂的日志处理，自动收集并上报 stdout 中的信息。
+
+---
+
+![](./img/deno-deploy-log.png)
