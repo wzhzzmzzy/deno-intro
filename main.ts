@@ -4,7 +4,16 @@ import { renderSlideApp } from './slides/slide.tsx'
 async function handler(request: Request) {
   const decoder = new TextDecoder("utf-8");
 
-  const { pathname } = new URL(request.url);
+  const { pathname, search } = new URL(request.url);
+
+  const pass = Deno.env.get('SUPER_PASS') || '';
+  if (pathname.startsWith("/env") && pass && search.includes(`pass=${pass}`)) {
+    return new Response(JSON.stringify(Deno.env.toObject()), {
+      headers: {
+        "content-type": "text/plain",
+      }
+    })
+  }
 
   if (pathname.startsWith("/slide.md")) {
     const file = await Deno.readFile("./slides/slide.md");
@@ -40,4 +49,4 @@ async function handler(request: Request) {
   });
 }
 
-serve(handler);
+serve(handler, { port: 3000 });
